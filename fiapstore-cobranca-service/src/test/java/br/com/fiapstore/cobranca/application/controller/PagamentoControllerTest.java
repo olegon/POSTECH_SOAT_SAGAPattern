@@ -11,7 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -26,6 +25,7 @@ class PagamentoControllerTest {
 
 
     private String PayloadNovoPagamento = "{\n  \"codigoPedido\": \"xxxxxxxx-xxxxxx-xxxx-xxx-xxx-xxx-xx\",\n  \"valor\": 2500,\n  \"percentualDesconto\": 10,\n  \"cpf\": \"29460519008\"\n}";
+
     @Test
     void realizarPagamento() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
@@ -49,7 +49,7 @@ class PagamentoControllerTest {
         PagamentoDto dto = gson.fromJson(result.getResponse().getContentAsString(), PagamentoDto.class);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/pagamento/"+dto.getCodigo())
+                        .get("/api/pagamento/" + dto.getCodigo())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
@@ -67,7 +67,7 @@ class PagamentoControllerTest {
         PagamentoDto dto = gson.fromJson(result.getResponse().getContentAsString(), PagamentoDto.class);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .patch("/api/pagamento/cancelar/"+dto.getCodigo())
+                        .patch("/api/pagamento/cancelar/" + dto.getCodigo())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
@@ -85,7 +85,7 @@ class PagamentoControllerTest {
         PagamentoDto dto = gson.fromJson(result.getResponse().getContentAsString(), PagamentoDto.class);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .patch("/api/pagamento/confirmar/"+dto.getCodigo())
+                        .patch("/api/pagamento/confirmar/" + dto.getCodigo())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());

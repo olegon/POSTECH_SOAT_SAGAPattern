@@ -9,12 +9,12 @@ import lombok.Data;
 @Schema(name = "Produto")
 public class ProdutoDto {
 
-    @Schema(example = "1",accessMode = Schema.AccessMode.READ_ONLY)
+    @Schema(example = "1", accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
 
-    @Schema(example = "Notebook",accessMode = Schema.AccessMode.READ_ONLY)
+    @Schema(example = "Notebook", accessMode = Schema.AccessMode.READ_ONLY)
     private String nome;
 
-    @Schema(example = "2500.00",accessMode = Schema.AccessMode.READ_ONLY)
+    @Schema(example = "2500.00", accessMode = Schema.AccessMode.READ_ONLY)
     private Double preco;
 }

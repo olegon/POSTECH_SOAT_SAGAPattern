@@ -3,9 +3,9 @@ package br.com.fiapstore.entrega.application.controller;
 import br.com.fiapstore.entrega.application.dto.EntregaDto;
 import br.com.fiapstore.entrega.domain.exception.EntregaNaoEncontradaException;
 import br.com.fiapstore.entrega.domain.exception.OperacaoInvalidaException;
-import br.com.fiapstore.entrega.domain.usecase.IRegistrarAgendamentoEntregaUseCase;
 import br.com.fiapstore.entrega.domain.usecase.ICancelarAgendamentoEntregaUseCase;
 import br.com.fiapstore.entrega.domain.usecase.IConfirmarAgendamentoEntregaUseCase;
+import br.com.fiapstore.entrega.domain.usecase.IRegistrarAgendamentoEntregaUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,13 +38,13 @@ public class EntregaController {
         }
     }
 
-    @PatchMapping(value = "/confirmar/{codigo}",produces = "application/json")
+    @PatchMapping(value = "/confirmar/{codigo}", produces = "application/json")
     @Operation(summary = "confirmar")
     public ResponseEntity confirmarEntrega(@PathVariable String codigo) {
         try {
-            EntregaDto entregaDtoSalva = confirmarEntregaUseCase.executar(codigo,null);
+            EntregaDto entregaDtoSalva = confirmarEntregaUseCase.executar(codigo, null);
             return ResponseEntity.status(HttpStatus.OK).body(entregaDtoSalva);
-        }catch ( OperacaoInvalidaException | EntregaNaoEncontradaException ex){
+        } catch (OperacaoInvalidaException | EntregaNaoEncontradaException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
 
         } catch (Exception ex) {
@@ -52,13 +52,13 @@ public class EntregaController {
         }
     }
 
-    @PatchMapping(value = "/cancelar/{codigo}",produces = "application/json")
+    @PatchMapping(value = "/cancelar/{codigo}", produces = "application/json")
     @Operation(summary = "cancelar")
     public ResponseEntity cancelarEntrega(@PathVariable String codigo) {
         try {
             EntregaDto entregaDtoSalva = cancelarEntregaUseCase.executar(codigo);
             return ResponseEntity.status(HttpStatus.OK).body(entregaDtoSalva);
-        }catch ( OperacaoInvalidaException | EntregaNaoEncontradaException ex){
+        } catch (OperacaoInvalidaException | EntregaNaoEncontradaException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
 
         } catch (Exception ex) {

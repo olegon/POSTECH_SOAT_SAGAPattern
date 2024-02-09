@@ -24,10 +24,10 @@ public class PedidoDto {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private StatusPedido statusPedido;
 
-    @Schema( example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
     private Long codigoProduto;
 
-    @Schema(example = "2",  requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(example = "2", requiredMode = Schema.RequiredMode.REQUIRED)
     private Long quantidadeProduto;
 
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)

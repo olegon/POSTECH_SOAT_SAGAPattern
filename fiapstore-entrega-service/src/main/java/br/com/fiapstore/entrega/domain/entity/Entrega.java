@@ -32,7 +32,7 @@ public class Entrega {
     }
 
 
-    private void configurarEntrega(){
+    private void configurarEntrega() {
         this.codigo = UUID.randomUUID();
         calcularDataEntrega();
         this.meioEntrega = MEIO_ENTREGA_PADRAO;
@@ -40,27 +40,27 @@ public class Entrega {
 
     }
 
-    private void calcularDataEntrega(){
+    private void calcularDataEntrega() {
         this.dataPrevistaEntrega = LocalDate.now().plus(PRAZO_ENTREGA_PADRAO, ChronoUnit.DAYS);
 
-        if(this.dataPrevistaEntrega.getDayOfWeek().equals(DayOfWeek.SATURDAY)){
+        if (this.dataPrevistaEntrega.getDayOfWeek().equals(DayOfWeek.SATURDAY)) {
             this.dataPrevistaEntrega = this.dataPrevistaEntrega.plus(2, ChronoUnit.DAYS);
 
-        }else  if(this.dataPrevistaEntrega.getDayOfWeek().equals(DayOfWeek.SUNDAY)){
+        } else if (this.dataPrevistaEntrega.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
             this.dataPrevistaEntrega = this.dataPrevistaEntrega.plus(1, ChronoUnit.DAYS);
         }
     }
 
     public void cancelarEntrega() throws OperacaoInvalidaException {
-        if(this.statusEntrega == StatusEntrega.CONFIRMADA || this.statusEntrega == StatusEntrega.CANCELADA)
-            throw new OperacaoInvalidaException("Operacao Inválida. A entrega encontra-se com status: "+this.statusEntrega.toString());
+        if (this.statusEntrega == StatusEntrega.CONFIRMADA || this.statusEntrega == StatusEntrega.CANCELADA)
+            throw new OperacaoInvalidaException("Operacao Inválida. A entrega encontra-se com status: " + this.statusEntrega.toString());
 
         this.statusEntrega = StatusEntrega.CANCELADA;
     }
 
     public void confirmarEntrega() throws OperacaoInvalidaException {
-        if(this.statusEntrega == StatusEntrega.CONFIRMADA || this.statusEntrega == StatusEntrega.CANCELADA)
-            throw new OperacaoInvalidaException("Operacao Inválida. A entrega encontra-se com status: "+this.statusEntrega.toString());
+        if (this.statusEntrega == StatusEntrega.CONFIRMADA || this.statusEntrega == StatusEntrega.CANCELADA)
+            throw new OperacaoInvalidaException("Operacao Inválida. A entrega encontra-se com status: " + this.statusEntrega.toString());
 
         this.statusEntrega = StatusEntrega.CONFIRMADA;
     }

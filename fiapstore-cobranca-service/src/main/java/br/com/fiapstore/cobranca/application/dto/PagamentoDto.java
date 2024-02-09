@@ -7,9 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Data
@@ -40,9 +38,8 @@ public class PagamentoDto {
     private StatusPagamento statusPagamento;
 
 
-
     @JsonIgnore
-    public static PagamentoDto toPagamentoDto(Pagamento pagamento){
+    public static PagamentoDto toPagamentoDto(Pagamento pagamento) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return new PagamentoDto(
                 pagamento.getCodigo().toString(),

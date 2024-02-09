@@ -18,10 +18,11 @@ public class ConfirmarPedido implements ConfirmarPedidoUseCase {
         this.pedidoDatabaseAdapter = pedidoDatabaseAdapter;
 
     }
+
     @Transactional
     public void executar(String codigoPedido) throws PedidoNaoEncontradoException, OperacaoInvalidaException {
         Pedido pedido = pedidoDatabaseAdapter.findByCodigoPedido(codigoPedido);
-        if(pedido==null) throw new PedidoNaoEncontradoException("Produto não encontrado");
+        if (pedido == null) throw new PedidoNaoEncontradoException("Produto não encontrado");
 
         pedido.confirmarPedido();
         pedidoDatabaseAdapter.save(pedido);

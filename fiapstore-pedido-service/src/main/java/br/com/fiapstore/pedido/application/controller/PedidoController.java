@@ -2,8 +2,8 @@ package br.com.fiapstore.pedido.application.controller;
 
 import br.com.fiapstore.pedido.application.dto.PedidoDto;
 import br.com.fiapstore.pedido.domain.exception.OperacaoInvalidaException;
-import br.com.fiapstore.pedido.domain.exception.PercentualDescontoAcimaDoLimiteException;
 import br.com.fiapstore.pedido.domain.exception.PedidoNaoEncontradoException;
+import br.com.fiapstore.pedido.domain.exception.PercentualDescontoAcimaDoLimiteException;
 import br.com.fiapstore.pedido.domain.usecase.CancelarPedidoUseCase;
 import br.com.fiapstore.pedido.domain.usecase.ConfirmarPedidoUseCase;
 import br.com.fiapstore.pedido.domain.usecase.RegistrarPedidoUseCase;
@@ -38,37 +38,39 @@ public class PedidoController {
             PedidoDto pedidoDtoSalvo = registrarPedidoUseCase.executar(pedidoDto);
             return ResponseEntity.status(HttpStatus.OK).body(pedidoDtoSalvo);
         } catch (Exception ex) {
-            logger.error(ex.getMessage(),ex);
+            logger.error(ex.getMessage(), ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
         }
     }
 
-    @PatchMapping(value = "/cancelar/{codigo}",produces = "application/json")
+    @PatchMapping(value = "/cancelar/{codigo}", produces = "application/json")
     @Operation(summary = "cancelar pedido")
     public ResponseEntity cancelarPedido(@PathVariable String codigo) {
         try {
             cancelarPedidoUseCase.executar(codigo);
             return ResponseEntity.status(HttpStatus.OK).body("Sucesso");
-        } catch (PedidoNaoEncontradoException | PercentualDescontoAcimaDoLimiteException | OperacaoInvalidaException ex) {
-            logger.error(ex.getMessage(),ex);
+        } catch (PedidoNaoEncontradoException | PercentualDescontoAcimaDoLimiteException |
+                 OperacaoInvalidaException ex) {
+            logger.error(ex.getMessage(), ex);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-        }catch (Exception ex) {
-            logger.error(ex.getMessage(),ex);
+        } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
         }
     }
 
-    @PatchMapping(value = "/confirmar/{codigo}",produces = "application/json")
+    @PatchMapping(value = "/confirmar/{codigo}", produces = "application/json")
     @Operation(summary = "confirmar pedido")
     public ResponseEntity confirmarPedido(@PathVariable String codigo) {
         try {
             confirmarPedidoUseCase.executar(codigo);
             return ResponseEntity.status(HttpStatus.OK).body("Sucesso");
-        } catch (PedidoNaoEncontradoException | PercentualDescontoAcimaDoLimiteException | OperacaoInvalidaException ex ) {
-            logger.error(ex.getMessage(),ex);
+        } catch (PedidoNaoEncontradoException | PercentualDescontoAcimaDoLimiteException |
+                 OperacaoInvalidaException ex) {
+            logger.error(ex.getMessage(), ex);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-        }catch (Exception ex) {
-            logger.error(ex.getMessage(),ex);
+        } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
         }
     }

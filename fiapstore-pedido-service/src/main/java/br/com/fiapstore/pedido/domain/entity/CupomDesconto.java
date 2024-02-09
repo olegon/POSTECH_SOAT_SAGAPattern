@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+
 @Getter
 public class CupomDesconto {
 
@@ -16,7 +17,7 @@ public class CupomDesconto {
 
     public CupomDesconto(String codigo) throws CupomExpiradoException, CupomInvalidoException {
         this.codigo = codigo;
-        this.dataUso=LocalDate.now();
+        this.dataUso = LocalDate.now();
         recuperarDadosCupom();
         checarCupom();
     }
@@ -28,7 +29,7 @@ public class CupomDesconto {
         this.dataVencimento = dataVencimento;
     }
 
-    private void recuperarDadosCupom(){
+    private void recuperarDadosCupom() {
         switch (this.codigo) {
             case "TESTE100" -> {
                 this.percentual = 10.0;
@@ -48,12 +49,13 @@ public class CupomDesconto {
             }
         }
     }
+
     public void checarCupom() throws CupomExpiradoException, CupomInvalidoException {
-        if(this.dataVencimento.isBefore(this.dataUso)){
+        if (this.dataVencimento.isBefore(this.dataUso)) {
             throw new CupomExpiradoException("Cupom Expirado");
         }
 
-        if(this.percentual == null){
+        if (this.percentual == null) {
             throw new CupomInvalidoException("Cupom Inválido");
         }
     }

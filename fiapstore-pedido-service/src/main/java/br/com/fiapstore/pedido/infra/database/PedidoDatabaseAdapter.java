@@ -52,7 +52,7 @@ public class PedidoDatabaseAdapter implements IPedidoDatabaseAdapter {
 
             Produto produto = ProdutoDatabaseAdapter.toProduto(pedidoEntity.getProdutoEntity());
 
-            pedido = new Pedido(pedidoEntity.getId(),UUID.fromString(pedidoEntity.getCodigoPedido()), pedidoEntity.getStatusPedido(), pedidoEntity.getCpf(), cupomDesconto, produto, pedidoEntity.getQuantidade());
+            pedido = new Pedido(pedidoEntity.getId(), UUID.fromString(pedidoEntity.getCodigoPedido()), pedidoEntity.getStatusPedido(), pedidoEntity.getCpf(), cupomDesconto, produto, pedidoEntity.getQuantidade());
         }
         return pedido;
     }
@@ -62,7 +62,7 @@ public class PedidoDatabaseAdapter implements IPedidoDatabaseAdapter {
         CupomDescontoEntity cupomDescontoEntity = null;
         PedidoEntity pedidoEntity = null;
 
-        if(pedido!=null && pedido.getCupomDesconto()!=null) {
+        if (pedido != null && pedido.getCupomDesconto() != null) {
             cupomDescontoEntity = new CupomDescontoEntity(
                     pedido.getCupomDesconto().getCodigo(),
                     pedido.getCupomDesconto().getDataUso(),

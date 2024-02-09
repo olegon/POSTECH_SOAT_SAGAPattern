@@ -2,16 +2,16 @@ package br.com.fiapstore.entrega.application.usecase;
 
 import br.com.fiapstore.entrega.application.dto.EntregaDto;
 import br.com.fiapstore.entrega.domain.entity.Entrega;
-import br.com.fiapstore.entrega.domain.repository.IEntregaDatabaseAdapter;
+import br.com.fiapstore.entrega.domain.repository.IEntregaDatabasePort;
 import br.com.fiapstore.entrega.domain.usecase.IRegistrarAgendamentoEntregaUseCase;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RegistrarAgendamentoEntrega implements IRegistrarAgendamentoEntregaUseCase {
 
-    private final IEntregaDatabaseAdapter entregaDatabaseAdapter;
+    private final IEntregaDatabasePort entregaDatabaseAdapter;
 
-    public RegistrarAgendamentoEntrega(IEntregaDatabaseAdapter entregaDatabaseAdapter) {
+    public RegistrarAgendamentoEntrega(IEntregaDatabasePort entregaDatabaseAdapter) {
         this.entregaDatabaseAdapter = entregaDatabaseAdapter;
 
     }
@@ -19,7 +19,7 @@ public class RegistrarAgendamentoEntrega implements IRegistrarAgendamentoEntrega
     @Override
     public EntregaDto executar(EntregaDto entregaDto) {
 
-        Entrega entrega = new Entrega(entregaDto.getCodigoPedido(),entregaDto.getCpf());
+        Entrega entrega = new Entrega(entregaDto.getCodigoPedido(), entregaDto.getCpf());
 
         entrega = entregaDatabaseAdapter.save(entrega);
 

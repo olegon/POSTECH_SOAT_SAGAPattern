@@ -2,7 +2,7 @@ package br.com.fiapstore.cobranca.domain.repository;
 
 import br.com.fiapstore.cobranca.domain.entity.Pagamento;
 
-public interface IPagamentoDatabaseAdapter {
+public interface IPagamentoDatabasePort {
     Pagamento save(Pagamento pagamento);
 
     Pagamento findByCodigo(String codigoPagamento);

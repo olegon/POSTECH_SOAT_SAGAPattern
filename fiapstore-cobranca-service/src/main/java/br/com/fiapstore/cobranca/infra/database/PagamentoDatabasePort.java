@@ -1,17 +1,18 @@
 package br.com.fiapstore.cobranca.infra.database;
 
 import br.com.fiapstore.cobranca.domain.entity.Pagamento;
-import br.com.fiapstore.cobranca.domain.repository.IPagamentoDatabaseAdapter;
+import br.com.fiapstore.cobranca.domain.repository.IPagamentoDatabasePort;
 import br.com.fiapstore.cobranca.infra.database.entity.PagamentoEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
+
 @Service
-public class PagamentoDatabaseAdapter implements IPagamentoDatabaseAdapter {
+public class PagamentoDatabasePort implements IPagamentoDatabasePort {
 
     private final IPagamentoRepository pagamentoRepository;
 
-    public PagamentoDatabaseAdapter(IPagamentoRepository pagamentoRepository) {
+    public PagamentoDatabasePort(IPagamentoRepository pagamentoRepository) {
         this.pagamentoRepository = pagamentoRepository;
     }
 
@@ -23,7 +24,7 @@ public class PagamentoDatabaseAdapter implements IPagamentoDatabaseAdapter {
 
     @Override
     public Pagamento findByCodigo(String codigoPagamento) {
-       PagamentoEntity pagamentoEntity = pagamentoRepository.findPagamentoEntityByCodigo(codigoPagamento);
+        PagamentoEntity pagamentoEntity = pagamentoRepository.findPagamentoEntityByCodigo(codigoPagamento);
         return toPagamento(pagamentoEntity);
     }
 
@@ -35,8 +36,8 @@ public class PagamentoDatabaseAdapter implements IPagamentoDatabaseAdapter {
     private static Pagamento toPagamento(PagamentoEntity pagamentoEntity) {
         Pagamento pagamento = null;
 
-        if(pagamentoEntity!=null)
-            pagamento =  new Pagamento(
+        if (pagamentoEntity != null)
+            pagamento = new Pagamento(
                     pagamentoEntity.getId(),
                     UUID.fromString(pagamentoEntity.getCodigo()),
                     pagamentoEntity.getCodigoPedido(),
@@ -51,16 +52,16 @@ public class PagamentoDatabaseAdapter implements IPagamentoDatabaseAdapter {
     private static PagamentoEntity toPagamentoEntity(Pagamento pagamento) {
         PagamentoEntity pagamentoEntity = null;
 
-        if(pagamento!=null)
-            pagamentoEntity =  new PagamentoEntity(
-                                pagamento.getId(),
-                                pagamento.getCodigo().toString(),
-                                pagamento.getCodigoPedido(),
-                                pagamento.getValor(),
-                                pagamento.getPercentualDesconto(),
-                                pagamento.getCpf(),
-                                pagamento.getDataVencimento(),
-                                pagamento.getStatusPagamento());
+        if (pagamento != null)
+            pagamentoEntity = new PagamentoEntity(
+                    pagamento.getId(),
+                    pagamento.getCodigo().toString(),
+                    pagamento.getCodigoPedido(),
+                    pagamento.getValor(),
+                    pagamento.getPercentualDesconto(),
+                    pagamento.getCpf(),
+                    pagamento.getDataVencimento(),
+                    pagamento.getStatusPagamento());
         return pagamentoEntity;
     }
 }

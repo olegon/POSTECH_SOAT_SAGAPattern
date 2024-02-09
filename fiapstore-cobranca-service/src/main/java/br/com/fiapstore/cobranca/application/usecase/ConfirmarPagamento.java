@@ -4,33 +4,47 @@ import br.com.fiapstore.cobranca.application.dto.PagamentoDto;
 import br.com.fiapstore.cobranca.domain.entity.Pagamento;
 import br.com.fiapstore.cobranca.domain.exception.OperacaoInvalidaException;
 import br.com.fiapstore.cobranca.domain.exception.PagamentoNaoEncontradoException;
-import br.com.fiapstore.cobranca.domain.repository.IPagamentoDatabaseAdapter;
+import br.com.fiapstore.cobranca.domain.repository.IPagamentoDatabasePort;
+import br.com.fiapstore.cobranca.domain.messaging.IPagamentoQueueOutPort;
 import br.com.fiapstore.cobranca.domain.usecase.IConfirmarPagamentoUseCase;
+import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
 
 @Service
 public class ConfirmarPagamento implements IConfirmarPagamentoUseCase {
+    @Autowired
+    private IPagamentoDatabasePort pagamentoDatabasePort;
 
-    private final IPagamentoDatabaseAdapter iPagamentoDatabaseAdapter;
+    @Autowired
+    private IPagamentoQueueOutPort pagamentoQueueOutPort;
 
-    public ConfirmarPagamento(IPagamentoDatabaseAdapter iPagamentoDatabaseAdapter) {
-        this.iPagamentoDatabaseAdapter = iPagamentoDatabaseAdapter;
-
-    }
-
+    @Autowired
+    private Gson gson;
 
     public PagamentoDto executar(String codigoPagamento) throws PagamentoNaoEncontradoException, OperacaoInvalidaException {
         Pagamento pagamento = null;
 
-        pagamento = this.iPagamentoDatabaseAdapter.findByCodigo(codigoPagamento);
+        pagamento = this.pagamentoDatabasePort.findByCodigo(codigoPagamento);
 
-        if(pagamento==null) throw new PagamentoNaoEncontradoException("Pagamento não encontrado");
+        if (pagamento == null) throw new PagamentoNaoEncontradoException("Pagamento não encontrado");
 
         pagamento.confirmar();
 
-        pagamento = this.iPagamentoDatabaseAdapter.save(pagamento);
+        pagamento = this.pagamentoDatabasePort.save(pagamento);
+
+        this.pagamentoQueueOutPort.publishPagamentoConfirmado(toMessage(pagamento));
 
         return PagamentoDto.toPagamentoDto(pagamento);
+    }
+
+    public String toMessage(Pagamento pagamento) {
+        var message = new HashMap<String, Object>();
+        message.put("codigoPagamento", pagamento.getCodigo());
+        message.put("codigoPedido", pagamento.getCodigoPedido());
+        message.put("cpf", pagamento.getCpf());
+        return gson.toJson(message);
     }
 }

@@ -1,7 +1,7 @@
-package br.com.fiapstore.cobranca.domain.repository;
+package br.com.fiapstore.cobranca.domain.messaging;
 
 
-public interface IPagamentoQueueAdapter {
+public interface IPagamentoQueueOutPort {
     void publishPagamentoPendente(String pagamentoJson);
 
     void publishPagamentoConfirmado(String pagamentoJson);

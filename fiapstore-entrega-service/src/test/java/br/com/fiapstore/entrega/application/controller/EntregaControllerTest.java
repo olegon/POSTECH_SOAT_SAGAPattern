@@ -11,7 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -49,7 +48,7 @@ class EntregaControllerTest {
         EntregaDto dto = gson.fromJson(result.getResponse().getContentAsString(), EntregaDto.class);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .patch("/api/entrega/confirmar/"+dto.getCodigo())
+                        .patch("/api/entrega/confirmar/" + dto.getCodigo())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
@@ -68,7 +67,7 @@ class EntregaControllerTest {
         EntregaDto dto = gson.fromJson(result.getResponse().getContentAsString(), EntregaDto.class);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .patch("/api/entrega/cancelar/"+dto.getCodigo())
+                        .patch("/api/entrega/cancelar/" + dto.getCodigo())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());

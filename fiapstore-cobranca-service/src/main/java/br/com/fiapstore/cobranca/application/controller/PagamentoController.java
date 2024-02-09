@@ -45,8 +45,7 @@ public class PagamentoController {
     }
 
 
-
-    @GetMapping(value = "/{codigo}",produces = "application/json")
+    @GetMapping(value = "/{codigo}", produces = "application/json")
     @Operation(summary = "consultar pagamento")
     public ResponseEntity consultarPagamentoPorCodigo(@PathVariable String codigo) {
         PagamentoDto pagamentoDto = null;
@@ -55,37 +54,37 @@ public class PagamentoController {
             return ResponseEntity.status(HttpStatus.OK).body(pagamentoDto);
         } catch (PagamentoNaoEncontradoException ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
         }
     }
 
 
-    @PatchMapping(value = "/cancelar/{codigo}",produces = "application/json")
+    @PatchMapping(value = "/cancelar/{codigo}", produces = "application/json")
     @Operation(summary = "cancelar pagamento")
     public ResponseEntity cancelarPagamento(@PathVariable String codigo) {
         PagamentoDto dto = null;
         try {
             dto = this.cancelarPagamentoUseCase.executar(codigo);
             return ResponseEntity.status(HttpStatus.OK).body(dto);
-        } catch (PagamentoNaoEncontradoException |OperacaoInvalidaException ex) {
+        } catch (PagamentoNaoEncontradoException | OperacaoInvalidaException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
         }
 
     }
 
-    @PatchMapping(value = "/confirmar/{codigo}",produces = "application/json")
+    @PatchMapping(value = "/confirmar/{codigo}", produces = "application/json")
     @Operation(summary = "confirmar pagamento")
     public ResponseEntity confirmarPagamento(@PathVariable String codigo) {
         PagamentoDto dto = null;
         try {
             dto = this.confirmarPagamentoUseCase.executar(codigo);
             return ResponseEntity.status(HttpStatus.OK).body(dto);
-        } catch (PagamentoNaoEncontradoException |OperacaoInvalidaException ex) {
+        } catch (PagamentoNaoEncontradoException | OperacaoInvalidaException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
         }
 

@@ -1,7 +1,7 @@
 package br.com.fiapstore.entrega.infra.database;
 
 import br.com.fiapstore.entrega.domain.entity.Entrega;
-import br.com.fiapstore.entrega.domain.repository.IEntregaDatabaseAdapter;
+import br.com.fiapstore.entrega.domain.repository.IEntregaDatabasePort;
 import br.com.fiapstore.entrega.infra.database.entity.EntregaEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-public class EntregaDatabaseAdapter implements IEntregaDatabaseAdapter {
+public class EntregaDatabasePort implements IEntregaDatabasePort {
 
     @Autowired
     private final IEntregaRepository entregaRepository;
@@ -34,10 +34,10 @@ public class EntregaDatabaseAdapter implements IEntregaDatabaseAdapter {
     }
 
 
-    private static EntregaEntity toEntregaEntity(Entrega entrega){
+    private static EntregaEntity toEntregaEntity(Entrega entrega) {
         EntregaEntity entregaEntity = null;
 
-        if(entrega!=null) {
+        if (entrega != null) {
             entregaEntity = new EntregaEntity(
                     entrega.getId(),
                     entrega.getCodigo().toString(),
@@ -51,10 +51,10 @@ public class EntregaDatabaseAdapter implements IEntregaDatabaseAdapter {
         return entregaEntity;
     }
 
-    private static Entrega toEntrega(EntregaEntity entregaEntity){
+    private static Entrega toEntrega(EntregaEntity entregaEntity) {
         Entrega entrega = null;
 
-        if(entregaEntity != null) {
+        if (entregaEntity != null) {
             entrega = new Entrega(
                     entregaEntity.getId(),
                     UUID.fromString(entregaEntity.getCodigo()),
@@ -65,5 +65,5 @@ public class EntregaDatabaseAdapter implements IEntregaDatabaseAdapter {
                     entregaEntity.getStatusEntrega());
         }
         return entrega;
-     }
+    }
 }
